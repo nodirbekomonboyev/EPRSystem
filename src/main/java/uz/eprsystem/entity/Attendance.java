@@ -1,29 +1,24 @@
 package uz.eprsystem.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
-import java.util.List;
 
-
-@Entity(name = "group_stage")
+@Entity(name = "attendance")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
-public class GroupStage extends BaseEntity {
+public class Attendance extends BaseEntity{
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "group")
-    private GroupEntity group;
+    @JoinColumn(name = "student_id")
+    private UserEntity student;
 
-    private LessonEntity lesson;
-
-    private LessonStatus status;
-
-    private List<Attendance> attendances;
+    private Boolean isCame;
 }

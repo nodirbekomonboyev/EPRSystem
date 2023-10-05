@@ -25,18 +25,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<SimpleGrantedAuthority> authorities =
-//                new HashSet<>(Set.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
-//        if (permissions != null) {
-//            authorities.addAll(permissions.stream()
-//                    .map(permission -> new SimpleGrantedAuthority(permission.name()))
-//                    .toList());
-//        }
-//        return authorities;
-//    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

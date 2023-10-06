@@ -1,6 +1,16 @@
 package uz.eprsystem.entity;
 
-public class LessonEntity {
+
+import jakarta.persistence.Entity;
+import lombok.*;
+
+@Entity(name = "lesson")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+public class LessonEntity extends BaseEntity {
 
     private Integer module;
 

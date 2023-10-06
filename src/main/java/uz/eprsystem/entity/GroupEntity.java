@@ -17,6 +17,9 @@ public class GroupEntity extends BaseEntity {
 
     private Integer module;
 
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "students")
     private List<UserEntity> students;
 
     @JsonIgnore

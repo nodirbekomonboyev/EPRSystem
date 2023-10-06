@@ -19,6 +19,9 @@ public class GroupEntity extends BaseEntity {
     private UserEntity mentor;
 
 
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "students")
     private List<UserEntity> students;
 
     @JsonIgnore

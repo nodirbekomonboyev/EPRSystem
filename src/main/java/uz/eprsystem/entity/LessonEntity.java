@@ -1,15 +1,15 @@
 package uz.eprsystem.entity;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
+
 import jakarta.persistence.Entity;
 import lombok.*;
 
-
-@Getter
-@Setter
+@Entity(name = "lesson")
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "lesson")
+@Builder
+@Getter
+@Setter
 public class LessonEntity extends BaseEntity {
 
     private Integer module;

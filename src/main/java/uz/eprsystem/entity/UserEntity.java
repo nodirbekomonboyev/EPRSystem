@@ -20,6 +20,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(unique = true)
     private String phoneNumber;
 
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

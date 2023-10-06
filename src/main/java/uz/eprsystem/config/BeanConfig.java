@@ -2,11 +2,8 @@ package uz.eprsystem.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.internal.bytebuddy.agent.builder.AgentBuilder;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.ui.ModelMap;
 
 @Configuration
 public class BeanConfig {
@@ -19,7 +16,5 @@ public class BeanConfig {
                 .setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
     }
-
-
 
 }

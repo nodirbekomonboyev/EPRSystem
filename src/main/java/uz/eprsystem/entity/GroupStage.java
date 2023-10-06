@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import java.util.List;
 
@@ -21,9 +22,14 @@ public class GroupStage extends BaseEntity {
     @JoinColumn(name = "group")
     private GroupEntity group;
 
+    @ManyToOne
+    @JoinColumn(name = "lesson")
     private LessonEntity lesson;
 
     private LessonStatus status;
 
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "attendances")
     private List<Attendance> attendances;
 }

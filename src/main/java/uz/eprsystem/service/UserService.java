@@ -12,8 +12,8 @@ import uz.eprsystem.exception.DataAlreadyExistsException;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.UserRepository;
 import uz.eprsystem.service.jwt.JwtService;
-
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,6 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
 
     public String save(UserRequestDto dto) {
         Optional<UserEntity> userEntity = userRepository.findUserEntityByPhoneNumber(dto.getPhoneNumber());
@@ -43,5 +42,11 @@ public class UserService {
         }
         throw new AuthenticationCredentialsNotFoundException("password did not match");
     }
+
+    public UserEntity getById(UUID id){
+        return userRepository.getById(id);
+    }
+
+
 
 }

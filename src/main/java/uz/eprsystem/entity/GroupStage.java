@@ -1,10 +1,7 @@
 package uz.eprsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
 
@@ -26,7 +23,11 @@ public class GroupStage extends BaseEntity {
     @JoinColumn(name = "lesson")
     private LessonEntity lesson;
 
-    private LessonStatus status;
+    @Enumerated(EnumType.STRING)
+    private LessonStatus lessonStatus;
+
+    @Enumerated(EnumType.STRING)
+    private CourseStatus courseStatus;
 
     @JsonIgnore
     @OneToMany

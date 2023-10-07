@@ -22,30 +22,30 @@ public class GroupService {
     private final ModelMapper modelMapper;
 
 
-
-    public GroupResponseDto create(GroupRequestDto groupRequestDto){
+    public GroupResponseDto create(GroupRequestDto groupRequestDto) {
         GroupEntity groupEntity = requestToEntity(groupRequestDto);
         LessonEntity lesson = groupEntity.getStage().getLesson();
 
-        if (lesson.getLessonQueue() == 12){
-
-        }
     }
 
 
+    private GroupEntity checkingLessonIsFinished(GroupEntity groupEntity) {
+        LessonStatus lessonStatus = groupEntity.getStage().getStatus();
+        LessonEntity lesson = groupEntity.getStage().getLesson();
+        if (LessonStatus.FINISHED.toString().equals(lessonStatus.toString().toUpperCase())) {
+            groupEntity.getStage().setStatus(LessonStatus.STARTED);
+            if (lesson.getLessonQueue() != 12)
+                  lesson.setLessonQueue(groupEntity.getStage().getLesson().getLessonQueue() + 1);
+//                lesson.setTheme();
+            else {
+                int numberOfLessonToZero = 0;
+                lesson.setLessonQueue(numberOfLessonToZero);
+//                lesson.setTheme();
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-    private GroupResponseDto entityToResponse(GroupEntity groupEntity){
+    private GroupResponseDto entityToResponse(GroupEntity groupEntity) {
         GroupResponseDto groupResponse = modelMapper.map(groupEntity, GroupResponseDto.class);
         if (!Objects.isNull(groupEntity.getStudents())) {
             groupResponse.setStudents(
@@ -61,15 +61,15 @@ public class GroupService {
         return groupResponse;
     }
 
-    private GroupEntity requestToEntity(GroupRequestDto groupRequestDto){
+    private GroupEntity requestToEntity(GroupRequestDto groupRequestDto) {
 
         GroupEntity groupEntity = modelMapper.map(groupRequestDto, GroupEntity.class);
-        if (!groupRequestDto.getStudents().isEmpty()){
+        if (!groupRequestDto.getStudents().isEmpty()) {
             groupEntity.setStudents(
-                groupRequestDto.getStudents()
-                        .stream()
-                        .map(entity-> modelMapper.map(entity, UserEntity.class))
-                        .collect(Collectors.toList())
+                    groupRequestDto.getStudents()
+                            .stream()
+                            .map(entity -> modelMapper.map(entity, UserEntity.class))
+                            .collect(Collectors.toList())
             );
         }
         Course course = Course.valueOf(groupRequestDto.getCourse().toUpperCase());

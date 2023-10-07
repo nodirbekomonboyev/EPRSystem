@@ -15,6 +15,9 @@ public class GroupEntity extends BaseEntity {
 
     private Course course;
 
+    @ManyToOne
+    private UserEntity mentor;
+
 
     private List<UserEntity> students;
 

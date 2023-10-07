@@ -15,7 +15,9 @@ public class GroupEntity extends BaseEntity {
 
     private Course course;
 
-    private Integer module;
+    @ManyToOne
+    private UserEntity mentor;
+
 
     @JsonIgnore
     @OneToMany

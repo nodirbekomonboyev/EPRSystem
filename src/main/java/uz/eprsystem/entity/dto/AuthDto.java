@@ -1,15 +1,15 @@
 package uz.eprsystem.entity.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequestDto {
-
-    private String name;
+@Getter
+@Setter
+public class AuthDto {
     private String phoneNumber;
     private String password;
 }

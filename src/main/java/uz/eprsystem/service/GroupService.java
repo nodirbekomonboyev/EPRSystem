@@ -10,7 +10,9 @@ import uz.eprsystem.entity.dto.GroupStageResponseDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.repository.GroupRepository;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +27,7 @@ public class GroupService {
     public GroupResponseDto create(GroupRequestDto groupRequestDto) {
         GroupEntity groupEntity = requestToEntity(groupRequestDto);
         LessonEntity lesson = groupEntity.getStage().getLesson();
+        return null;
 
     }
 
@@ -43,6 +46,7 @@ public class GroupService {
 //                lesson.setTheme();
             }
         }
+        return null;
     }
 
     private GroupResponseDto entityToResponse(GroupEntity groupEntity) {
@@ -81,4 +85,11 @@ public class GroupService {
     }
 
 
+    public List<GroupResponseDto> getMyGroups() {
+        return null;
+    }
+
+    public String transferStudent(UUID studentId, UUID newGroupId) {
+        return null;
+    }
 }

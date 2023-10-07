@@ -10,9 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AttendanceResponseDto {
-
-    private UUID id;
     private UserResponseDto userResponseDto;
-    private boolean isAttendant;
+    private Boolean isAttendant;
 
 }

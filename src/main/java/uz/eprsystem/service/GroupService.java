@@ -3,7 +3,7 @@ package uz.eprsystem.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import uz.eprsystem.entity.GroupEntity;
+import uz.eprsystem.entity.*;
 import uz.eprsystem.entity.dto.GroupRequestDto;
 import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.GroupStageResponseDto;
@@ -20,6 +20,17 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final ModelMapper modelMapper;
+
+
+
+    public GroupResponseDto create(GroupRequestDto groupRequestDto){
+        GroupEntity groupEntity = requestToEntity(groupRequestDto);
+        LessonEntity lesson = groupEntity.getStage().getLesson();
+
+        if (lesson.getLessonQueue() == 12){
+
+        }
+    }
 
 
 
@@ -51,7 +62,22 @@ public class GroupService {
     }
 
     private GroupEntity requestToEntity(GroupRequestDto groupRequestDto){
-        return null;
+
+        GroupEntity groupEntity = modelMapper.map(groupRequestDto, GroupEntity.class);
+        if (!groupRequestDto.getStudents().isEmpty()){
+            groupEntity.setStudents(
+                groupRequestDto.getStudents()
+                        .stream()
+                        .map(entity-> modelMapper.map(entity, UserEntity.class))
+                        .collect(Collectors.toList())
+            );
+        }
+        Course course = Course.valueOf(groupRequestDto.getCourse().toUpperCase());
+        groupEntity.setCourse(course);
+
+        groupEntity.setStage(modelMapper.map(groupRequestDto.getGroupStageResponseDto(), GroupStage.class));
+
+        return groupEntity;
     }
 
 

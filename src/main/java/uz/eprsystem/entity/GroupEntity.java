@@ -15,7 +15,6 @@ public class GroupEntity extends BaseEntity {
 
     private Course course;
 
-    private Integer module;
 
     private List<UserEntity> students;
 

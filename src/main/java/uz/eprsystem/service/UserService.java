@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.eprsystem.entity.UserEntity;
+import uz.eprsystem.entity.UserRole;
 import uz.eprsystem.entity.dto.JwtResponse;
 import uz.eprsystem.entity.dto.UserRequestDto;
 import uz.eprsystem.exception.DataAlreadyExistsException;
@@ -45,6 +46,14 @@ public class UserService {
 
     public UserEntity getById(UUID id){
         return userRepository.getById(id);
+    }
+    public void deleteById(UUID uid) {
+        userRepository.deleteById(uid);
+    }
+
+    public UserRole checkRole(UUID id){
+        UserEntity byId = getById(id);
+        return byId.getRole();
     }
 
 

@@ -12,9 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupResponseDto {
-
-    private UUID id;
-    private int module;
+    private UserResponseDto mentor;
     private List<UserResponseDto> students;
     private GroupStageResponseDto groupStage;
 

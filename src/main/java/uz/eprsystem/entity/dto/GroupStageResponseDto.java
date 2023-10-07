@@ -12,8 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupStageResponseDto {
-
-    private UUID id;
     private GroupResponseDto group;
     private LessonResponseDto lesson;
     private String lessonStatus;

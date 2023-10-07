@@ -13,7 +13,7 @@ import java.util.List;
 public class GroupRequestDto {
 
     private String course;
-    private Integer module;
+    private UserResponseDto mentor;
     private List<UserRequestDto> students;
     private GroupStageRequestDto groupStageResponseDto;
 

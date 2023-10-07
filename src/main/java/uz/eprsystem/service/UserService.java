@@ -8,13 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.eprsystem.entity.UserEntity;
 import uz.eprsystem.entity.UserRole;
-import uz.eprsystem.entity.dto.AuthDto;
-import uz.eprsystem.entity.dto.JwtResponse;
-import uz.eprsystem.entity.dto.UserRequestDto;
+import uz.eprsystem.entity.dto.*;
 import uz.eprsystem.exception.DataAlreadyExistsException;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.UserRepository;
 import uz.eprsystem.service.jwt.JwtService;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -60,4 +60,15 @@ public class UserService {
     }
 
 
+    public List<UserResponseDto> getAllMentors() {
+        return null;
+    }
+
+    public List<UserResponseDto> getAllStudents() {
+        return null;
+    }
+
+    public List<UserResponseDto> getStudentsByGroup() {
+        return null;
+    }
 }

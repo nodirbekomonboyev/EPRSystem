@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/epr_system
     username: postgres
-    password: 4949
+    password: 2311
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

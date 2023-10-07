@@ -1,6 +1,4 @@
 package uz.eprsystem.entity;
-
-
 import jakarta.persistence.Entity;
 import lombok.*;
 

@@ -19,11 +19,9 @@ public class GroupEntity extends BaseEntity {
 
     @JsonIgnore
     @OneToMany
-    @JoinColumn(name = "students")
     private List<UserEntity> students;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "group_stage")
     private GroupStage stage;
 }

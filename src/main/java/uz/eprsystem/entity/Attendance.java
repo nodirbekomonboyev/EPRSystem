@@ -17,7 +17,7 @@ public class Attendance extends BaseEntity{
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    //@JoinColumn(name = "student_id")
     private UserEntity student;
 
     private Boolean isCame;

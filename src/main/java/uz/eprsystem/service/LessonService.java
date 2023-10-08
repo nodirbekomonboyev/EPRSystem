@@ -65,15 +65,15 @@ public class LessonService {
         if (LessonStatus.FINISHED.toString().equals(lessonStatus.toString().toUpperCase())) {
             groupEntity.getStage().setLessonStatus(LessonStatus.STARTED);
             int nextLesson = groupEntity.getStage().getLesson().getLessonQueue() + 1;
-            if (lesson.getLessonQueue() != 12)
+            if (lesson.getLessonQueue() != 12) {
                 lesson.setLessonQueue(nextLesson);
-//                lesson.setTheme();
-            else {
-                int lessonToNewModule = 0;
+                changerTheme(lesson);
+            } else {
+                int lessonToNewModule = 1;
                 int nextModule = lesson.getModule() + 1;
                 lesson.setLessonQueue(lessonToNewModule);
                 lesson.setModule(nextModule);
-//                lesson.setTheme();
+                changerTheme(lesson);
             }
         }
 
@@ -82,9 +82,14 @@ public class LessonService {
     }
 
 
-//    private LessonEntity changerTheme(LessonEntity lesson){
-//
-//    }
+    private LessonEntity changerTheme(LessonEntity lesson){
+        Integer lessonQueue = lesson.getLessonQueue();
+        Integer lessonModule = lesson.getModule();
+
+        String theme = lessonQueue + " theme in module " + lessonModule;
+        lesson.setTheme(theme);
+        return lesson;
+    }
 
 
     private LessonEntity requestToEntity(LessonRequestDto requestDto) {

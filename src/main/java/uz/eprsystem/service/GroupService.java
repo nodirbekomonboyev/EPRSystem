@@ -11,6 +11,7 @@ import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.GroupRepository;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -108,4 +109,11 @@ public class GroupService {
     }
 
 
+    public List<GroupResponseDto> getMyGroups() {
+        return null;
+    }
+
+    public String transferStudent(UUID studentId, UUID newGroupId) {
+        return null;
+    }
 }

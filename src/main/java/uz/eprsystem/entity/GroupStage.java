@@ -16,11 +16,9 @@ public class GroupStage extends BaseEntity {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "group")
     private GroupEntity group;
 
     @ManyToOne
-    @JoinColumn(name = "lesson")
     private LessonEntity lesson;
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +29,5 @@ public class GroupStage extends BaseEntity {
 
     @JsonIgnore
     @OneToMany
-    @JoinColumn(name = "attendances")
     private List<Attendance> attendances;
 }

@@ -12,7 +12,6 @@ import uz.eprsystem.entity.dto.LessonRequestDto;
 import uz.eprsystem.entity.dto.LessonResponseDto;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.LessonRepository;
-
 import java.util.Objects;
 import java.util.UUID;
 
@@ -108,6 +107,21 @@ public class LessonService {
         lessonResponseDto.setCourse(lesson.getCourse().name());
 
         return lessonResponseDto;
+    }
+
+    public String save(LessonRequestDto dto){
+        LessonEntity map = modelMapper.map(dto, LessonEntity.class);
+        lessonRepository.save(map);
+        return "lesson successfully saved";
+    }
+
+    public List<LessonEntity> getByCourse(Course course){
+        return lessonRepository.getAllByCourse(course);
+    }
+
+
+    public LessonEntity getById(UUID id){
+        return lessonRepository.getById(id);
     }
 
 }

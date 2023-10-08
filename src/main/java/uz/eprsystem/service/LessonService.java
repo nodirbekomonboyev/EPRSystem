@@ -3,6 +3,7 @@ package uz.eprsystem.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import uz.eprsystem.entity.Course;
 import uz.eprsystem.entity.GroupEntity;
 import uz.eprsystem.entity.LessonEntity;
 import uz.eprsystem.entity.LessonStatus;
@@ -10,6 +11,8 @@ import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.LessonRequestDto;
 import uz.eprsystem.entity.dto.LessonResponseDto;
 import uz.eprsystem.repository.LessonRepository;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class LessonService {
     private final GroupService groupService;
     private final ModelMapper modelMapper;
 
-    public LessonResponseDto create(LessonRequestDto lessonRequestDto){
+    public LessonResponseDto create(LessonRequestDto lessonRequestDto) {
         GroupEntity groupEntity = groupService.findById(lessonRequestDto.getGroupId());
         GroupEntity checkedLesson = checkingLessonIsFinished(groupEntity);
         LessonEntity lesson = checkedLesson.getStage().getLesson();
@@ -56,13 +59,17 @@ public class LessonService {
 //    }
 
 
-
-    private LessonEntity requestToEntity(LessonRequestDto requestDto){
-        return null;
+    private LessonEntity requestToEntity(LessonRequestDto requestDto) {
+        GroupEntity groupEntity = groupService.findById(requestDto.getGroupId());
+        LessonEntity lesson = modelMapper.map(requestDto, LessonEntity.class);
+        Course course = Course.valueOf(requestDto.getCourse().toUpperCase());
+        lesson.setCourse(course);
+        lesson.setGroupEntity(groupEntity);
+        return lesson;
     }
 
 
-    private LessonResponseDto entityToResponse(LessonEntity lesson){
+    private LessonResponseDto entityToResponse(LessonEntity lesson) {
         return null;
     }
 

@@ -26,7 +26,7 @@ public class GroupStage extends BaseEntity {
     @JoinColumn(name = "lesson")
     private LessonEntity lesson;
 
-    private LessonStatus status;
+    private LessonStatus lessonStatus;
 
     @JsonIgnore
     @OneToMany

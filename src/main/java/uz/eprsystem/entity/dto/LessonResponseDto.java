@@ -10,6 +10,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LessonResponseDto {
+
+    private UUID groupId;
     private int module;
     private int lessonQueue;
     private String theme;

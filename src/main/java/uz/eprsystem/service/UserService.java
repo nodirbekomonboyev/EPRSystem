@@ -2,19 +2,16 @@ package uz.eprsystem.service;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.eprsystem.entity.UserEntity;
-import uz.eprsystem.entity.UserRole;
-import uz.eprsystem.entity.dto.*;
+import uz.eprsystem.entity.dto.JwtResponse;
+import uz.eprsystem.entity.dto.UserRequestDto;
 import uz.eprsystem.exception.DataAlreadyExistsException;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.UserRepository;
 import uz.eprsystem.service.jwt.JwtService;
-
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,16 +29,15 @@ public class UserService {
             throw  new DataAlreadyExistsException("User already exists");
         }
         UserEntity map = modelMapper.map(dto, UserEntity.class);
-        map.setRole(UserRole.STUDENT);
         map.setPassword(passwordEncoder.encode(map.getPassword()));
         userRepository.save(map);
         return "Successful saved!";
     }
 
-    public JwtResponse signIn(AuthDto authDto) {
-        UserEntity user = userRepository.findUserEntityByPhoneNumber(authDto.getPhoneNumber())
+    public JwtResponse signIn(UserRequestDto dto) {
+        UserEntity user = userRepository.findUserEntityByPhoneNumber(dto.getPhoneNumber())
                 .orElseThrow(() -> new DataNotFoundException("user not found!"));
-        if (passwordEncoder.matches(authDto.getPassword(), user.getPassword())) {
+        if (passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             return new JwtResponse(jwtService.generateToken(user));
         }
         throw new AuthenticationCredentialsNotFoundException("password did not match");
@@ -50,25 +46,7 @@ public class UserService {
     public UserEntity getById(UUID id){
         return userRepository.getById(id);
     }
-    public void deleteById(UUID uid) {
-        userRepository.deleteById(uid);
-    }
-
-    public UserRole checkRole(UUID id){
-        UserEntity byId = getById(id);
-        return byId.getRole();
-    }
 
 
-    public List<UserResponseDto> getAllMentors() {
-        return null;
-    }
 
-    public List<UserResponseDto> getAllStudents() {
-        return null;
-    }
-
-    public List<UserResponseDto> getStudentsByGroup() {
-        return null;
-    }
 }

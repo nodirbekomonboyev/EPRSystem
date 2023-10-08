@@ -25,40 +25,59 @@ public class GroupService {
 
 
     public GroupResponseDto create(GroupRequestDto groupRequestDto) {
-        GroupEntity groupEntity = requestToEntity(groupRequestDto);
-        LessonEntity lesson = groupEntity.getStage().getLesson();
-
+        GroupEntity groupEntity = checkingLessonIsFinished(modelMapper.map(groupRequestDto, GroupEntity.class));
+        groupRepository.save(groupEntity);
+        return entityToResponse(groupEntity);
     }
 
 
     private GroupEntity checkingLessonIsFinished(GroupEntity groupEntity) {
         LessonStatus lessonStatus = groupEntity.getStage().getLessonStatus();
         LessonEntity lesson = groupEntity.getStage().getLesson();
-        if (LessonStatus.FINISHED.toString().equals(lessonStatus.toString().toUpperCase())) {
-            groupEntity.getStage().setLessonStatus(LessonStatus.STARTED);
-            if (lesson.getLessonQueue() != 12)
-                  lesson.setLessonQueue(groupEntity.getStage().getLesson().getLessonQueue() + 1);
+            if (LessonStatus.FINISHED.toString().equals(lessonStatus.toString().toUpperCase())) {
+                groupEntity.getStage().setLessonStatus(LessonStatus.STARTED);
+                int nextLesson = groupEntity.getStage().getLesson().getLessonQueue() + 1;
+                if (lesson.getLessonQueue() != 12)
+                    lesson.setLessonQueue(nextLesson);
 //                lesson.setTheme();
-            else {
-                int numberOfLessonToZero = 0;
-                lesson.setLessonQueue(numberOfLessonToZero);
+                else {
+                    int lessonToNewModule = 0;
+                    int nextModule = lesson.getModule() + 1;
+                    lesson.setLessonQueue(lessonToNewModule);
+                    lesson.setModule(nextModule);
 //                lesson.setTheme();
+                }
             }
+
+        groupEntity.getStage().setLesson(lesson);
+        return groupEntity;
+    }
+
+
+    private GroupResponseDto update(UUID id, GroupRequestDto groupRequestDto) {
+        GroupEntity groupEntity = groupRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Not found data"));
+        GroupEntity enteredGroup = modelMapper.map(groupRequestDto, GroupEntity.class);
+        if (groupEntity.getIsActive()){
+            modelMapper.map(enteredGroup, groupEntity);
+            groupRepository.save(groupEntity);
+            return entityToResponse(groupEntity);
+        }else
+            throw new DataNotFoundException("Not existed data");
+    }
+
+    private GroupResponseDto getById(UUID id) {
+        GroupEntity groupEntity = groupRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Not found data"));
+        if (groupEntity.getIsActive()){
+            return entityToResponse(groupEntity);
         }
+
+        throw new DataNotFoundException("Not existed data");
     }
 
 
-    private GroupResponseDto update(UUID id, GroupRequestDto groupRequestDto){
-        return null;
-    }
-
-    private GroupResponseDto getById(UUID id){
-        return null;
-    }
-
-
-
-    private void delete(UUID id){
+    private void delete(UUID id) {
         GroupEntity groupEntity = groupRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("DataNotExist"));
         groupEntity.setIsActive(false);

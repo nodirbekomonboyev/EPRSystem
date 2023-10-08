@@ -10,9 +10,11 @@ import uz.eprsystem.entity.LessonStatus;
 import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.LessonRequestDto;
 import uz.eprsystem.entity.dto.LessonResponseDto;
+import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.LessonRepository;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,39 @@ public class LessonService {
         lessonRepository.save(lesson);
         return entityToResponse(lesson);
     }
+
+
+
+
+    public LessonResponseDto update(LessonRequestDto lessonRequestDto, UUID id){
+        LessonEntity enteredRequestLesson = requestToEntity(lessonRequestDto);
+        LessonEntity lessonEntity = lessonRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Data not found"));
+        if (lessonEntity.getIsActive()){
+            lessonRepository.save(lessonEntity);
+            modelMapper.map(enteredRequestLesson, lessonEntity);
+            return entityToResponse(lessonEntity);
+        }
+        throw new DataNotFoundException("Not existed data");
+    }
+
+    public LessonResponseDto getById(UUID id){
+        LessonEntity lessonEntity = lessonRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Data not found"));
+        if (lessonEntity.getIsActive())
+            return entityToResponse(lessonEntity);
+
+        throw new DataNotFoundException("Not existed data");
+    }
+
+    public void delete(UUID id){
+        LessonEntity lessonEntity = lessonRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Data not found "));
+        lessonEntity.setIsActive(false);
+        lessonRepository.save(lessonEntity);
+    }
+
+
 
 
     private GroupEntity checkingLessonIsFinished(GroupEntity groupEntity) {

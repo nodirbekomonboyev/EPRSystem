@@ -31,10 +31,6 @@ public class LessonService {
         lessonRepository.save(lesson);
         return entityToResponse(lesson);
     }
-
-
-
-
     public LessonResponseDto update(LessonRequestDto lessonRequestDto, UUID id){
         LessonEntity enteredRequestLesson = requestToEntity(lessonRequestDto);
         LessonEntity lessonEntity = lessonRepository.findById(id)
@@ -62,9 +58,6 @@ public class LessonService {
         lessonEntity.setIsActive(false);
         lessonRepository.save(lessonEntity);
     }
-
-
-
 
     private GroupEntity checkingLessonIsFinished(GroupEntity groupEntity) {
         LessonStatus lessonStatus = groupEntity.getStage().getLessonStatus();

@@ -30,10 +30,6 @@ public class GroupService {
         return entityToResponse(groupEntity);
     }
 
-
-
-
-
     public GroupResponseDto update(UUID id, GroupRequestDto groupRequestDto) {
         GroupEntity groupEntity = groupRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Not found data"));

@@ -70,7 +70,11 @@ public class LessonService {
 
 
     private LessonResponseDto entityToResponse(LessonEntity lesson) {
-        return null;
+        LessonResponseDto lessonResponseDto = modelMapper.map(lesson, LessonResponseDto.class);
+        lessonResponseDto.setGroupId(lesson.getId());
+        lessonResponseDto.setCourse(lesson.getCourse().name());
+
+        return lessonResponseDto;
     }
 
 }

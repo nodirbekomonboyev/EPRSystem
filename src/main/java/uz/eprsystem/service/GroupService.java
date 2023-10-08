@@ -92,4 +92,12 @@ public class GroupService {
     public String transferStudent(UUID studentId, UUID newGroupId) {
         return null;
     }
+
+    public GroupEntity getById(UUID groupId) {
+        return null;
+    }
+
+    public List<UserResponseDto> getStudentsByGroup(UUID groupId) {
+        return null;
+    }
 }

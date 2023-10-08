@@ -11,11 +11,8 @@ import lombok.*;
 public class LessonEntity extends BaseEntity {
 
     private Integer module;
-
     private Integer lessonQueue;
-
     private String theme;
-
     private Course course;
 
 }

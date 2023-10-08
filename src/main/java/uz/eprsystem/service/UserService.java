@@ -2,7 +2,6 @@ package uz.eprsystem.service;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,14 +60,14 @@ public class UserService {
 
 
     public List<UserResponseDto> getAllMentors() {
-        return null;
+        return userRepository.findAllByRole(UserRole.MENTOR);
     }
 
     public List<UserResponseDto> getAllStudents() {
-        return null;
+        return userRepository.findAllByRole(UserRole.STUDENT);
     }
 
-    public List<UserResponseDto> getStudentsByGroup() {
+    public List<UserResponseDto> getStudentsByGroup(UUID groupId) {
         return null;
     }
 }

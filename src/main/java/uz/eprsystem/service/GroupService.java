@@ -8,6 +8,7 @@ import uz.eprsystem.entity.dto.GroupRequestDto;
 import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.GroupStageResponseDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
+import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.GroupRepository;
 
 import java.util.List;
@@ -25,29 +26,52 @@ public class GroupService {
 
 
     public GroupResponseDto create(GroupRequestDto groupRequestDto) {
-        GroupEntity groupEntity = requestToEntity(groupRequestDto);
-        LessonEntity lesson = groupEntity.getStage().getLesson();
-        return null;
-
+        GroupEntity groupEntity = modelMapper.map(groupRequestDto, GroupEntity.class);
+        groupRepository.save(groupEntity);
+        return entityToResponse(groupEntity);
     }
 
+    public GroupResponseDto update(UUID id, GroupRequestDto groupRequestDto) {
+        GroupEntity groupEntity = groupRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Not found data"));
+        GroupEntity enteredGroup = modelMapper.map(groupRequestDto, GroupEntity.class);
+        if (groupEntity.getIsActive()){
+            modelMapper.map(enteredGroup, groupEntity);
+            groupRepository.save(groupEntity);
+            return entityToResponse(groupEntity);
+        }else
+            throw new DataNotFoundException("Not existed data");
+    }
 
-    private GroupEntity checkingLessonIsFinished(GroupEntity groupEntity) {
-        LessonStatus lessonStatus = groupEntity.getStage().getStatus();
-        LessonEntity lesson = groupEntity.getStage().getLesson();
-        if (LessonStatus.FINISHED.toString().equals(lessonStatus.toString().toUpperCase())) {
-            groupEntity.getStage().setStatus(LessonStatus.STARTED);
-            if (lesson.getLessonQueue() != 12)
-                  lesson.setLessonQueue(groupEntity.getStage().getLesson().getLessonQueue() + 1);
-//                lesson.setTheme();
-            else {
-                int numberOfLessonToZero = 0;
-                lesson.setLessonQueue(numberOfLessonToZero);
-//                lesson.setTheme();
-            }
+    public GroupResponseDto getById(UUID id) {
+        GroupEntity groupEntity = groupRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Not found data"));
+        if (groupEntity.getIsActive()){
+            return entityToResponse(groupEntity);
         }
-        return null;
+
+        throw new DataNotFoundException("Not existed data");
     }
+
+
+    public void delete(UUID id) {
+        GroupEntity groupEntity = groupRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Data Not Exist"));
+        groupEntity.setIsActive(false);
+        groupRepository.save(groupEntity);
+    }
+
+    public GroupEntity findById(UUID id){
+        GroupEntity groupEntity = groupRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Not found data"));
+
+        if (groupEntity.getIsActive())
+            return groupEntity;
+        else
+            throw new DataNotFoundException("Not exist data");
+    }
+
+
 
     private GroupResponseDto entityToResponse(GroupEntity groupEntity) {
         GroupResponseDto groupResponse = modelMapper.map(groupEntity, GroupResponseDto.class);

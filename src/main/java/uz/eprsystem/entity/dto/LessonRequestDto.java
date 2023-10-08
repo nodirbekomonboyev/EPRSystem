@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LessonRequestDto {
 
-
+    private UUID groupId;
     private int module;
     private int lessonQueue;
     private String theme;

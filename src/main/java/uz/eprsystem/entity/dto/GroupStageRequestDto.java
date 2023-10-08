@@ -16,5 +16,6 @@ public class GroupStageRequestDto {
     private LessonRequestDto lessonRequestDto;
     private LessonStatus lessonStatus;
     private List<AttendanceRequestDto> studentAttendances;
+    private String courseStatus;
 
 }

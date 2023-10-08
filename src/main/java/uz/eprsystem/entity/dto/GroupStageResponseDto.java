@@ -15,6 +15,7 @@ public class GroupStageResponseDto {
     private GroupResponseDto group;
     private LessonResponseDto lesson;
     private String lessonStatus;
+    private String courseStatus;
     private List<AttendanceResponseDto> studentAttendance;
 
 }

@@ -29,4 +29,6 @@ public abstract class BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     protected LocalDateTime updatedDate;
 
+    protected Boolean isActive = true;
+
 }

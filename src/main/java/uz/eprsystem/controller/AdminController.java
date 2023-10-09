@@ -5,6 +5,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import uz.eprsystem.entity.UserRole;
+import uz.eprsystem.entity.dto.GroupRequestDto;
+import uz.eprsystem.entity.dto.GroupResponseDto;
+import uz.eprsystem.entity.dto.UserRequestDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.service.GroupService;
 import uz.eprsystem.service.UserService;
@@ -16,6 +19,19 @@ import java.util.UUID;
 public class AdminController {
     private final UserService userService;
     private final GroupService groupService;
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/create-group")
+    public GroupResponseDto createGroup(@RequestBody GroupRequestDto group) {
+        return groupService.createGroup(group);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/delete-group")
+    public String deleteGroupByName(@RequestParam String name){
+        return groupService.deleteGroupByName(name);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/gat-all-students")
     public List<UserResponseDto> getAllStudents(){
@@ -36,5 +52,23 @@ public class AdminController {
             @RequestParam UUID newGroupId)
     {
         return groupService.transferStudent(studentId, newGroupId);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PostMapping("/create-admin")
+    public String createAdmin(@RequestBody UserRequestDto admin) {
+        return userService.createAdmin(admin);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @GetMapping("/delete-admin")
+    public String deleteAdmin(@RequestParam String phoneNumber) {
+        return userService.deleteAdmin(phoneNumber);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @GetMapping("/get-all-admins")
+    public List<UserResponseDto> getAllAdmins() {
+        return userService.getAllUserByRole(UserRole.ADMIN);
     }
 }

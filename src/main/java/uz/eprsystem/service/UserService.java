@@ -74,10 +74,16 @@ public class UserService {
         throw new DataNotFoundException("Data not found");
     }
 
-
     public List<UserResponseDto> getStudentsByGroup(UUID id) {
         GroupResponseDto byId = groupService.getById(id);
         return byId.getStudents();
     }
 
+    public String createAdmin(UserRequestDto admin) {
+        return null;
+    }
+
+    public String deleteAdmin(String phoneNumber) {
+        return null;
+    }
 }

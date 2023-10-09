@@ -12,7 +12,7 @@ import uz.eprsystem.exception.DataAlreadyExistsException;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.UserRepository;
 import uz.eprsystem.service.jwt.JwtService;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -59,15 +59,21 @@ public class UserService {
     }
 
 
-    public List<UserResponseDto> getAllMentors() {
-        return userRepository.findAllByRole(UserRole.MENTOR);
+    public List<UserResponseDto> getAllUserByRole(UserRole role) {
+        List<UserResponseDto> users = new ArrayList<>();
+        userRepository.findAllByRole(role).forEach(response -> {
+            users.add(modelMapper.map(response, UserResponseDto.class));
+        });
+
+        if(!users.isEmpty()){
+            return users;
+        }
+
+        throw new DataNotFoundException("Data not found");
     }
 
-    public List<UserResponseDto> getAllStudents() {
-        return userRepository.findAllByRole(UserRole.STUDENT);
-    }
 
-    public List<UserResponseDto> getStudentsByGroup(UUID groupId) {
+    public List<UserResponseDto> getStudentsByGroup() {
         return null;
     }
 }

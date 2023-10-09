@@ -1,10 +1,9 @@
 package uz.eprsystem.entity;
 
 import lombok.Getter;
-import lombok.Setter;
+
 
 @Getter
-
 public enum Course {
     JAVA(10),
     PYTHON(10),

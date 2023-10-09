@@ -121,7 +121,7 @@ public class GroupService {
     public GroupResponseDto createGroup(GroupRequestDto group) {
         Optional<GroupEntity> groupEntity = groupRepository.findGroupEntityByName(group.getName());
         if(groupEntity.isPresent()) {
-            throw  new DataAlreadyExistsException("User already exists");
+            throw  new DataAlreadyExistsException("Group already exists");
         }
         GroupEntity map = modelMapper.map(group, GroupEntity.class);
         groupRepository.save(map);

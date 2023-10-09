@@ -21,9 +21,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final GroupService groupService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+
 
     public String save(UserRequestDto dto) {
         Optional<UserEntity> userEntity = userRepository.findUserEntityByPhoneNumber(dto.getPhoneNumber());
@@ -73,7 +75,8 @@ public class UserService {
     }
 
 
-    public List<UserResponseDto> getStudentsByGroup() {
-        return null;
+    public List<UserResponseDto> getStudentsByGroup(UUID id) {
+        GroupResponseDto byId = groupService.getById(id);
+        return byId.getStudents();
     }
 }

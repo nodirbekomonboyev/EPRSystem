@@ -17,6 +17,7 @@ import java.util.*;
 public class GroupStageService {
     private final GroupStageRepository groupStageRepository;
     private final GroupService groupService;
+    private final UserService userService;
     private final LessonService lessonService;
     private final ModelMapper modelMapper;
 
@@ -82,7 +83,7 @@ public class GroupStageService {
     }
 
     public String groupAttendance(UUID groupId, List<Boolean> attendance) {
-        List<UserResponseDto> students =  groupService.getStudentsByGroup(groupId);
+        List<UserResponseDto> students = userService.getStudentsByGroup(groupId);
         GroupEntity group = groupService.findById(groupId);
         Optional<GroupStageResponseDto> byLessonStatus = groupStageRepository.findByLessonStatus(LessonStatus.STARTED);
         LessonResponseDto lesson = byLessonStatus.get().getLesson();

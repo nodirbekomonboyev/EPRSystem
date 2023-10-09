@@ -83,4 +83,8 @@ public class UserService {
     public String createAdmin(UserRequestDto admin) {
         return null;
     }
+
+    public String deleteAdmin(String phoneNumber) {
+        return null;
+    }
 }

@@ -41,7 +41,19 @@ public class AdminController {
 
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping("/create-admin")
-    public String transferStudent(@RequestBody UserRequestDto admin) {
+    public String createAdmin(@RequestBody UserRequestDto admin) {
         return userService.createAdmin(admin);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @GetMapping("/delete-admin")
+    public String deleteAdmin(@RequestParam String phoneNumber) {
+        return userService.deleteAdmin(phoneNumber);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @GetMapping("/get-all-admins")
+    public List<UserResponseDto> getAllAdmins() {
+        return userService.getAllUserByRole(UserRole.ADMIN);
     }
 }

@@ -79,4 +79,8 @@ public class UserService {
         GroupResponseDto byId = groupService.getById(id);
         return byId.getStudents();
     }
+
+    public String createAdmin(UserRequestDto admin) {
+        return null;
+    }
 }

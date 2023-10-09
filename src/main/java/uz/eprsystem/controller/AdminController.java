@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import uz.eprsystem.entity.UserRole;
+import uz.eprsystem.entity.dto.UserRequestDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.service.GroupService;
 import uz.eprsystem.service.UserService;
@@ -36,5 +37,11 @@ public class AdminController {
             @RequestParam UUID newGroupId)
     {
         return groupService.transferStudent(studentId, newGroupId);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PostMapping("/create-admin")
+    public String transferStudent(@RequestBody UserRequestDto admin) {
+        return userService.createAdmin(admin);
     }
 }

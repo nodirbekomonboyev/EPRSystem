@@ -74,7 +74,6 @@ public class UserService {
         throw new DataNotFoundException("Data not found");
     }
 
-
     public List<UserResponseDto> getStudentsByGroup(UUID id) {
         GroupResponseDto byId = groupService.getById(id);
         return byId.getStudents();

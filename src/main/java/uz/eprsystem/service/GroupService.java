@@ -8,12 +8,11 @@ import uz.eprsystem.entity.dto.GroupRequestDto;
 import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.GroupStageResponseDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
+import uz.eprsystem.exception.DataAlreadyExistsException;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.GroupRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,7 +119,14 @@ public class GroupService {
     }
 
     public GroupResponseDto createGroup(GroupRequestDto group) {
-        return null;
+        Optional<GroupEntity> groupEntity = groupRepository.findGroupEntityByName(group.getName());
+        if(groupEntity.isPresent()) {
+            throw  new DataAlreadyExistsException("User already exists");
+        }
+        GroupEntity map = modelMapper.map(group, GroupEntity.class);
+        groupRepository.save(map);
+
+        return modelMapper.map(map, GroupResponseDto.class);
     }
 
     public String deleteGroupByName(String name) {

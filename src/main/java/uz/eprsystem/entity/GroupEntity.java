@@ -13,6 +13,9 @@ import java.util.List;
 @Setter
 public class GroupEntity extends BaseEntity {
 
+    @Column(unique = true)
+    private String name;
+
     private Course course;
 
     @ManyToOne

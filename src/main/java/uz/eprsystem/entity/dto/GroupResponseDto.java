@@ -7,6 +7,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupResponseDto {
+    private String name;
     private UserResponseDto mentor;
     private List<UserResponseDto> students;
     private GroupStageResponseDto groupStage;

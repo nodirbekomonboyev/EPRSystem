@@ -31,6 +31,7 @@ public class GroupStageService {
         return "Successful saved!";
     }
 
+    //method already finished but I don't know why invisible logic part this is test
     public String startingGroup(UUID groupId) {
         GroupEntity groupEntity = groupService.findById(groupId);
         List<GroupStage> byGroup = getByGroup(groupEntity);

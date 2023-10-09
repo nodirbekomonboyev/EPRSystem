@@ -119,7 +119,11 @@ public class GroupService {
         return null;
     }
 
-    public List<UserResponseDto> getStudentsByGroup(UUID groupId) {
+    public GroupResponseDto createGroup(GroupRequestDto group) {
+        return null;
+    }
+
+    public String deleteGroupByName(String name) {
         return null;
     }
 }

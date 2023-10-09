@@ -11,7 +11,6 @@ import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.exception.DataAlreadyExistsException;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.GroupRepository;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -147,6 +146,6 @@ public class GroupService {
                 }
             }
         }
-        return null;
+        throw new DataNotFoundException("Data not found");
     }
 }

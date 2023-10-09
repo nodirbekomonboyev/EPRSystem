@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/mentors")
 @RequiredArgsConstructor
 public class MentorController {
     private final UserService userService;
     private final GroupService groupService;
     private final GroupStageService groupStageService;
+
 
     @PreAuthorize("hasRole('MENTOR')")
     @GetMapping("/get-my-groups")
@@ -46,4 +48,11 @@ public class MentorController {
     ){
         return groupStageService.groupAttendance(groupId, attendance);
     }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/student/get-my-groups")
+    public GroupResponseDto getStudentGroup(@RequestParam UUID userId){
+        return groupService.getMyGroupByUserId(userId);
+    }
+
 }

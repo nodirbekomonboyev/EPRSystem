@@ -6,10 +6,11 @@ import uz.eprsystem.entity.Course;
 import uz.eprsystem.entity.LessonEntity;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface LessonRepository extends JpaRepository<LessonEntity, UUID> {
     List<LessonEntity> findAllByCourse(Course course);
-    LessonEntity findByLessonQueueAndModule(Integer lessonQueue, Integer Module);
+    Optional<LessonEntity> findByLessonQueueAndModule(Integer lessonQueue, Integer Module);
 }

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.eprsystem.entity.*;
-import uz.eprsystem.entity.dto.AttendanceResponseDto;
 import uz.eprsystem.entity.dto.GroupStageResponseDto;
 import uz.eprsystem.entity.dto.LessonResponseDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
@@ -32,12 +31,28 @@ public class GroupStageService {
     }
 
     public String startingGroup(UUID groupId) {
-        GroupEntity groupEntity = groupService.getById(groupId);
+        GroupEntity groupEntity = groupService.findById(groupId);
         List<GroupStage> byGroup = getByGroup(groupEntity);
-        LessonEntity lesson = lessonService.newLesson(byGroup.get(byGroup.size() - 1));
+
+
+        if (byGroup.size() == 0){
+            Optional<LessonEntity> lessons = lessonService.newLesson(1,1);
+            GroupStage groupStage = GroupStage.builder()
+                    .group(groupEntity)
+                    .lesson(lessons.get())
+                    .status(LessonStatus.STARTED)
+                    .build();
+            save(groupStage);
+            return "started";
+        }
+        GroupStage groupStage1 = byGroup.get(byGroup.size() - 1);
+        Optional<LessonEntity> lessons = lessonService.newLesson(
+                groupStage1.getLesson().getLessonQueue(),
+                groupStage1.getLesson().getModule()
+        );
         GroupStage groupStage = GroupStage.builder()
                 .group(groupEntity)
-                .lesson(lesson)
+                .lesson(lessons.get())
                 .status(LessonStatus.STARTED)
                 .build();
         save(groupStage);
@@ -68,7 +83,7 @@ public class GroupStageService {
 
     public String groupAttendance(UUID groupId, List<Boolean> attendance) {
         List<UserResponseDto> students =  groupService.getStudentsByGroup(groupId);
-        GroupEntity group = groupService.getById(groupId);
+        GroupEntity group = groupService.findById(groupId);
         Optional<GroupStageResponseDto> byLessonStatus = groupStageRepository.findByLessonStatus(LessonStatus.STARTED);
         LessonResponseDto lesson = byLessonStatus.get().getLesson();
         LessonEntity theLesson = modelMapper.map(lesson, LessonEntity.class);

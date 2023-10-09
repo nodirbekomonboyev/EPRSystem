@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GroupService {
 
-
     private final GroupRepository groupRepository;
     private final ModelMapper modelMapper;
 
@@ -114,10 +113,6 @@ public class GroupService {
     }
 
     public String transferStudent(UUID studentId, UUID newGroupId) {
-        return null;
-    }
-
-    public GroupEntity getById(UUID groupId) {
         return null;
     }
 

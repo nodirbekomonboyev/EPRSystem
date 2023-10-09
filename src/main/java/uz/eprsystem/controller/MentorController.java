@@ -30,7 +30,7 @@ public class MentorController {
     @PreAuthorize("hasRole('MENTOR')")
     @GetMapping("/get-students-by-group")
     public List<UserResponseDto> getStudentsByGroup(@RequestParam UUID groupId){
-        return userService.getStudentsByGroup();
+        return userService.getStudentsByGroup(groupId);
     }
 
     @PreAuthorize("hasRole('MENTOR')")
@@ -41,7 +41,7 @@ public class MentorController {
 
     @PreAuthorize("hasRole('MENTOR')")
     @PostMapping("/attendance-of-students")
-    public List<AttendanceResponseDto> attendanceOfStudents(
+    public String attendanceOfStudents(
             @RequestParam UUID groupId,
             @RequestParam List<Boolean> attendance
     ){

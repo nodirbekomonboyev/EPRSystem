@@ -22,7 +22,7 @@ public class GroupStage extends BaseEntity {
     private LessonEntity lesson;
 
     @Enumerated(EnumType.STRING)
-    private LessonStatus lessonStatus;
+    private LessonStatus status;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;

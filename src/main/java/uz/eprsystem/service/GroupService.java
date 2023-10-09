@@ -118,4 +118,8 @@ public class GroupService {
     public String transferStudent(UUID studentId, UUID newGroupId) {
         return null;
     }
+
+    public List<UserResponseDto> getStudentsByGroup(UUID groupId) {
+        return null;
+    }
 }

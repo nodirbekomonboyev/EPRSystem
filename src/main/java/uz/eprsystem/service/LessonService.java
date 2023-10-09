@@ -3,16 +3,14 @@ package uz.eprsystem.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import uz.eprsystem.entity.Course;
-import uz.eprsystem.entity.GroupEntity;
-import uz.eprsystem.entity.LessonEntity;
-import uz.eprsystem.entity.LessonStatus;
+import uz.eprsystem.entity.*;
 import uz.eprsystem.entity.dto.LessonRequestDto;
 import uz.eprsystem.entity.dto.LessonResponseDto;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.LessonRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -116,12 +114,14 @@ public class LessonService {
     }
 
     public List<LessonEntity> getByCourse(Course course){
-        return lessonRepository.getAllByCourse(course);
+        return lessonRepository.findAllByCourse(course);
     }
 
 
-    public LessonEntity getById(UUID id){
-        return lessonRepository.getById(id);
+    public Optional<LessonEntity> newLesson(Integer lessonQueue, Integer module) {
+        if (module<=12 && lessonQueue == 12) {
+            return lessonRepository.findByLessonQueueAndModule(1, module + 1);
+        }
+        return lessonRepository.findByLessonQueueAndModule(lessonQueue + 1,module);
     }
-
 }

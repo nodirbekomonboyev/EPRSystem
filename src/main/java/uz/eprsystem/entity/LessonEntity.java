@@ -15,11 +15,8 @@ public class LessonEntity extends BaseEntity {
     private GroupEntity groupEntity;
 
     private Integer module;
-
     private Integer lessonQueue;
-
     private String theme;
-
     private Course course;
 
 }

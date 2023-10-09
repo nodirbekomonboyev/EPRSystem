@@ -10,7 +10,7 @@ import uz.eprsystem.entity.dto.GroupStageResponseDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.GroupRepository;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -19,11 +19,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class GroupService {
-
-
     private final GroupRepository groupRepository;
     private final ModelMapper modelMapper;
-
 
     public GroupResponseDto create(GroupRequestDto groupRequestDto) {
         GroupEntity groupEntity = modelMapper.map(groupRequestDto, GroupEntity.class);
@@ -71,8 +68,6 @@ public class GroupService {
             throw new DataNotFoundException("Not exist data");
     }
 
-
-
     private GroupResponseDto entityToResponse(GroupEntity groupEntity) {
         GroupResponseDto groupResponse = modelMapper.map(groupEntity, GroupResponseDto.class);
         if (!Objects.isNull(groupEntity.getStudents())) {
@@ -108,9 +103,16 @@ public class GroupService {
         return groupEntity;
     }
 
+    public List<GroupResponseDto> getMyGroups(UUID id) {
+        List<GroupResponseDto> groups = new ArrayList<>();
+        groupRepository.findAllByMentorId(id).forEach(response -> {
+            groups.add(modelMapper.map(response, GroupResponseDto.class));
+        });
 
-    public List<GroupResponseDto> getMyGroups() {
-        return null;
+        if(!groups.isEmpty()){
+            return groups;
+        }
+        throw new DataNotFoundException("Data not found");
     }
 
     public String transferStudent(UUID studentId, UUID newGroupId) {

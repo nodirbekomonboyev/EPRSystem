@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import uz.eprsystem.entity.UserRole;
 import uz.eprsystem.entity.dto.UserResponseDto;
 import uz.eprsystem.service.GroupService;
 import uz.eprsystem.service.UserService;
@@ -18,13 +19,13 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/gat-all-students")
     public List<UserResponseDto> getAllStudents(){
-       return userService.getAllStudents();
+       return userService.getAllUserByRole(UserRole.STUDENT);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/gat-all-mentor")
     public List<UserResponseDto> getMentors(){
-        return userService.getAllMentors();
+        return userService.getAllUserByRole(UserRole.MENTOR);
     }
 
 

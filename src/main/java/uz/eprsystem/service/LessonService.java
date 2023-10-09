@@ -7,12 +7,10 @@ import uz.eprsystem.entity.Course;
 import uz.eprsystem.entity.GroupEntity;
 import uz.eprsystem.entity.LessonEntity;
 import uz.eprsystem.entity.LessonStatus;
-import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.LessonRequestDto;
 import uz.eprsystem.entity.dto.LessonResponseDto;
 import uz.eprsystem.exception.DataNotFoundException;
 import uz.eprsystem.repository.LessonRepository;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service

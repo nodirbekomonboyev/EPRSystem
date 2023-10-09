@@ -6,8 +6,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uz.eprsystem.entity.Attendance;
-import uz.eprsystem.entity.GroupStage;
 import uz.eprsystem.entity.dto.AttendanceResponseDto;
 import uz.eprsystem.entity.dto.GroupResponseDto;
 import uz.eprsystem.entity.dto.UserResponseDto;
@@ -27,7 +25,7 @@ public class MentorController {
     @PreAuthorize("hasRole('MENTOR')")
     @GetMapping("/get-my-groups")
     public List<GroupResponseDto> getMyGroups(@RequestParam UUID userId){
-        return groupService.getMyGroups();
+        return groupService.getMyGroups(userId);
     }
     @PreAuthorize("hasRole('MENTOR')")
     @GetMapping("/get-students-by-group")

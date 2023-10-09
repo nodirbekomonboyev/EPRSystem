@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
 
-@Entity(name = "group")
+@Entity(name = "groups")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

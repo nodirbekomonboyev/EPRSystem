@@ -115,11 +115,28 @@ public class GroupService {
         throw new DataNotFoundException("Data not found");
     }
 
+
+
+
+
     public String transferStudent(UUID studentId, UUID newGroupId) {
         return null;
     }
 
     public List<UserResponseDto> getStudentsByGroup(UUID groupId) {
+        return null;
+    }
+
+    public GroupResponseDto getMyGroupByUserId(UUID userId) {
+        List<GroupEntity> all = groupRepository.findAll();
+        for (GroupEntity g: all) {
+            List<UserEntity> students = g.getStudents();
+            for (UserEntity us: students) {
+                if (Objects.equals(us.getId(), userId)){
+                    return modelMapper.map(g,GroupResponseDto.class);
+                }
+            }
+        }
         return null;
     }
 }

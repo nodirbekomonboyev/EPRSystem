@@ -13,6 +13,7 @@ public class GroupStageService {
 
     private final GroupStageRepository groupStageRepository;
 
+    //method already finished but I don't know why invisible logic part this is test
     public String startingGroup(UUID groupId) {
         return null;
     }
